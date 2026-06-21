@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>足球盘口 · m-handicap 导航页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f6f0;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            color: #2e2b27;
+            line-height: 1.7;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .page-wrap {
+            max-width: 820px;
+            margin: 0 auto;
+            background: #fefcfa;
+            padding: 2rem 2.5rem 3rem;
+            box-shadow: 0 1px 12px rgba(0,0,0,0.03);
+            border-radius: 32px;
+            margin-top: 2rem;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0 1.2rem;
+            border-bottom: 1px solid #eae5db;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+        }
+
+        .site-id {
+            font-weight: 500;
+            font-size: 1.25rem;
+            letter-spacing: 0.5px;
+            color: #3d3832;
+        }
+
+        .site-id small {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: #8a8277;
+            margin-left: 0.4rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.6rem;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a {
+            color: #5b534a;
+            text-decoration: none;
+            padding: 0.2rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        .nav-links a:hover {
+            color: #b35c2c;
+            border-bottom-color: #b35c2c;
+        }
+
+        /* hero 区 */
+        .hero {
+            padding: 2.2rem 0 1.8rem;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: #2b2621;
+        }
+
+        .hero .sub {
+            margin-top: 0.75rem;
+            font-size: 1.05rem;
+            color: #5f574e;
+            max-width: 640px;
+        }
+
+        .hero .sub a {
+            color: #b35c2c;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1.5px;
+            font-weight: 500;
+        }
+
+        .hero .sub a:hover {
+            color: #8f4a22;
+        }
+
+        /* 三个场景模块 */
+        .scenes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.8rem;
+            margin: 2.2rem 0 2rem;
+        }
+
+        .scene-card {
+            background: #f9f6f0;
+            border-radius: 24px;
+            padding: 1.6rem 1.4rem 1.8rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .scene-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+        }
+
+        .scene-card .icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+            display: inline-block;
+        }
+
+        .scene-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 0.2rem 0 0.5rem;
+            color: #332e28;
+        }
+
+        .scene-card p {
+            font-size: 0.95rem;
+            color: #4f4942;
+        }
+
+        .scene-card .tag {
+            display: inline-block;
+            background: #e7e0d6;
+            color: #3d3832;
+            font-size: 0.75rem;
+            padding: 0.1rem 0.7rem;
+            border-radius: 30px;
+            margin-top: 0.8rem;
+        }
+
+        /* 核心介绍区块（引用样式） */
+        .intro-block {
+            background: #f3efe7;
+            padding: 1.8rem 2rem;
+            border-radius: 28px;
+            margin: 1.6rem 0 2rem;
+            border-left: 5px solid #b35c2c;
+        }
+
+        .intro-block p {
+            margin-bottom: 0.75rem;
+        }
+
+        .intro-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        .intro-block strong {
+            color: #3d3229;
+        }
+
+        /* 常见说明/提示框 */
+        .note-box {
+            background: #fcf9f5;
+            border: 1px solid #e5ddd1;
+            border-radius: 20px;
+            padding: 1.4rem 1.8rem;
+            margin: 2rem 0 0.8rem;
+        }
+
+        .note-box h4 {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #3d3832;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .note-box ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 0.3rem;
+        }
+
+        .note-box li {
+            padding: 0.25rem 0;
+            position: relative;
+            padding-left: 1.2rem;
+            color: #4e4840;
+            font-size: 0.95rem;
+        }
+
+        .note-box li::before {
+            content: "·";
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            color: #b35c2c;
+        }
+
+        .faq-mini {
+            margin-top: 2.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px dashed #dcd5ca;
+        }
+
+        .faq-mini details {
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        .faq-mini summary {
+            cursor: pointer;
+            font-weight: 500;
+            color: #3d3832;
+            padding: 0.2rem 0;
+        }
+
+        .faq-mini summary::-webkit-details-marker {
+            color: #b35c2c;
+        }
+
+        .faq-mini .answer {
+            margin: 0.3rem 0 0.6rem 1.2rem;
+            color: #4f4942;
+        }
+
+        /* 页脚 */
+        .footer-note {
+            margin-top: 2.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #eae5db;
+            font-size: 0.85rem;
+            color: #7f766b;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem;
+        }
+
+        .footer-note a {
+            color: #7f766b;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            text-decoration-thickness: 0.5px;
+        }
+
+        .footer-note a:hover {
+            color: #b35c2c;
+        }
+
+        /* 响应式 */
+        @media (max-width: 700px) {
+            .page-wrap {
+                padding: 1.2rem 1.2rem 2rem;
+                margin-top: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .scenes-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .top-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-links {
+                justify-content: flex-start;
+                gap: 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .intro-block {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .note-box {
+                padding: 1rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0 0.6rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrap">
+
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <span class="site-id">m‑handicap <small>· 盘口笔记</small></span>
+        <div class="nav-links">
+            <a href="#">使用指引</a>
+            <a href="#">场景</a>
+            <a href="#">常见问题</a>
+        </div>
+    </nav>
+
+    <!-- hero 区 -->
+    <div class="hero">
+        <h1>再次回到这里 · 持续关注</h1>
+        <div class="sub">
+            如果你已经收藏过 <a href="https://m-handicap.com">足球盘口</a>，或者正考虑将它固定到书签栏，这篇说明可以帮你更好地了解它的内容脉络与使用方式。
+        </div>
+    </div>
+
+    <!-- 三个场景模块 -->
+    <div class="scenes-grid">
+        <div class="scene-card">
+            <div class="icon">📌</div>
+            <h3>重新打开</h3>
+            <p>每次返回，页面结构清晰，盘口术语与基础概念集中整理，方便快速定位以前看过的章节。</p>
+            <span class="tag">再次访问</span>
+        </div>
+        <div class="scene-card">
+            <div class="icon">🔖</div>
+            <h3>收藏至浏览器</h3>
+            <p>将页面加入书签，随时查阅不同赛事背景下的盘口说明与常见对比，减少重复搜索。</p>
+            <span class="tag">固定收藏</span>
+        </div>
+        <div class="scene-card">
+            <div class="icon">🔄</div>
+            <h3>持续翻阅</h3>
+            <p>长期关注同一类信息时，稳定的页面结构和平实的表述能减少理解成本，适合反复翻阅。</p>
+            <span class="tag">长期关注</span>
+        </div>
+    </div>
+
+    <!-- 核心介绍：引用块风格 -->
+    <div class="intro-block">
+        <p><strong>关于页面内容方向</strong> —— 这里以盘口概念的拆解和常见情景说明为主，不包含实时数据或动态赔率。适合想了解基础框架、术语关联以及不同让球表述逻辑的浏览者。</p>
+        <p>页面围绕「让球」「水位」「盘口类型」等核心点展开，同时穿插一些注意提示，帮助区分相似表述。如果你对某个具体术语有疑问，也可以通过页面内提供的分类快速定位。</p>
+        <p>日常使用中，<a href="https://m-handicap.com">足球盘口</a> 的内容会保持稳定更新与修正，不会突然改变结构，适合作为长期参考页。</p>
+    </div>
+
+    <!-- 提示框 / 常见说明 -->
+    <div class="note-box">
+        <h4>💡 阅读与使用建议</h4>
+        <ul>
+            <li>优先浏览「盘口类型」小节，建立基本分类概念</li>
+            <li>对比「让球方」与「受让方」的说明时，注意水位搭配</li>
+            <li>页面中标注了常用场景，例如平手盘、半球盘的区别</li>
+            <li>遇到不熟悉的缩写，可查阅页面末尾的术语简表</li>
+        </ul>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-mini">
+        <details>
+            <summary>这个页面适合第一次接触盘口的人吗？</summary>
+            <div class="answer">页面从基本名词开始梳理，没有预设知识门槛，但更偏向整理型内容，配合其他基础教程一起看效果更好。</div>
+        </details>
+        <details>
+            <summary>以后会更新哪些内容？</summary>
+            <div class="answer">计划补充更多赛事场景下的说明示例，以及常见误解的纠正。更新后页面结构保持不变，已收藏的链接依然有效。</div>
+        </details>
+        <details>
+            <summary>为什么推荐收藏而不是每次搜索？</summary>
+            <div class="answer">因为页面分类固定、术语一致，收藏后可以跳过每次筛选信息的过程，直接进入熟悉的章节。</div>
+        </details>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer-note">
+        <span>© m‑handicap 介绍页 · 内容仅供学习参考</span>
+        <span><a href="https://m-handicap.com">足球盘口</a></span>
+    </div>
+
+</div>
+</body>
+</html>
